@@ -56,10 +56,10 @@ test.describe('Registration suite', () => {
       await expect(regName).toHaveValue('Test User');
       await regEmail.fill('Test123@gmail.com');
       await expect(regEmail).toHaveValue('Test123@gmail.com');
-      await regPass.fill('Pass123');
-      await expect(regPass).toHaveValue('Pass123');
-      await regConfirmPass.fill('Pass123');
-      await expect(regConfirmPass).toHaveValue('Pass123');
+      await regPass.fill('Pass123123');
+      await expect(regPass).toHaveValue('Pass123123');
+      await regConfirmPass.fill('Pass123123');
+      await expect(regConfirmPass).toHaveValue('Pass123123');
       await regSubmit.click();
     });
 
