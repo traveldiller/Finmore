@@ -11,14 +11,14 @@ test.describe('Registration suite', () => {
   let currencyUAH;
 
   test.beforeEach(async ({ page }) => {
-    const regTitle = page.getByTestId('register-title');
-    const regName = page.getByTestId('register-name-input');
-    const regEmail = page.getByTestId('register-email-input');
-    const regPass = page.getByTestId('register-password-input');
-    const regConfirmPass = page.getByTestId('register-confirm-password-input');
-    const regSubmit = page.getByTestId('register-submit-button');
-    const currencySelect = page.getByTestId('register-currency-select');
-    const currencyUAH = page.getByTestId('currency-option-UAH');
+    regTitle = page.getByTestId('register-title');
+    regName = page.getByTestId('register-name-input');
+    regEmail = page.getByTestId('register-email-input');
+    regPass = page.getByTestId('register-password-input');
+    regConfirmPass = page.getByTestId('register-confirm-password-input');
+    regSubmit = page.getByTestId('register-submit-button');
+    currencySelect = page.getByTestId('register-currency-select');
+    currencyUAH = page.getByTestId('currency-option-UAH');
     await page.goto('/');
   })
 

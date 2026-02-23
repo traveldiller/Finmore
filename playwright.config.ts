@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-
+import type { ReporterConfig } from './custom-reporter';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -11,6 +11,27 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+const reporterConfig: ReporterConfig = {
+  outputDir: 'test-results/enterprise-report',
+  reportTitle: 'Test Execution Report',
+  companyName: 'Test Company',
+  projectName: 'Finmore',
+  theme: 'light',
+  primaryColor: '#667eea',
+  language: 'uk',
+  // logo: './assets/logo.png', // Path to your logo file
+  // OR use base64 encoded image:
+  // logo: 'data:image/png;base64,iVBORw0KGgo...',
+  showPassedTests: true,
+  showSkippedTests: true,
+  showEnvironmentInfo: true,
+  includeScreenshots: true,
+  includeVideos: true,
+  includeTraces: true,
+  testCategories: ['smoke', 'regression', 'integration', 'e2e'],
+};
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -22,7 +43,11 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+   reporter: [
+    ['./custom-reporter.ts', reporterConfig],
+    //['html'],
+    //['list'],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
