@@ -67,8 +67,9 @@ test.describe('Registration suite', () => {
 
   test('Login with valid email and password', async ({ page }) => {
     await page
-      .getByPlaceholder('email')
+      .getByTestId('login-email-input')
       .fill('admin@demo.com');
-    await page.getByLabel('Password').fill('admin123');
+    await page.getByTestId('login-password-input').fill('admin123');
+    await page.getByTestId('login-submit-button').click();
   });
 })
