@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import {RegisterPage} from '@playwright/pages/registerPage';
+import { RegisterPage } from '../pages/registerPage';
 
 test.describe('Registration suite', () => {
   let regTitle;
@@ -35,7 +35,7 @@ test.describe('Registration suite', () => {
       await regLink.click();
     });
 
-    await test.step('Check Registration form', async() => {
+    await test.step('Check Registration form', async () => {
       //const regTitle = page.getByTestId('register-title');
       await expect(regTitle).toHaveText('Реєстрація');
       await expect(regName).toBeEnabled();
@@ -66,11 +66,47 @@ test.describe('Registration suite', () => {
 
   });
 
-  test('Login with valid email and password', async ({ page }) => {
-    await page
-      .getByTestId('login-email-input')
-      .fill('admin@demo.com');
-    await page.getByTestId('login-password-input').fill('admin123');
-    await page.getByTestId('login-submit-button').click();
+
+  //// POM approach ////
+
+  test.describe('User Registration suite', () => {
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/');
+    })
+
+    test('Registration of new user', async ({ page }) => {
+      const registerPage = new RegisterPage(page);
+
+      await test.step('Open registration page', async () => {
+        await expect(registerPage.regLink).toBeVisible();
+        await registerPage.regLink.click();
+      });
+
+      await test.step('Check Registration form', async () => {
+        await expect(registerPage.regTitle).toHaveText('Реєстрація');
+        await expect(registerPage.regNameInput).toBeEnabled();
+
+      });
+
+      await test.step('Fill registration form', async () => {
+        await registerPage.regNameInput.fill('Test User');
+        await expect(registerPage.regNameInput).toHaveValue('Test User');
+        await registerPage.regEmailInput.fill('Test123@gmail.com');
+        await expect(registerPage.regEmailInput).toHaveValue('Test123@gmail.com');
+        await registerPage.regPassInput.fill('Pass123123');
+        await expect(registerPage.regPassInput).toHaveValue('Pass123123');
+        await registerPage.regConfirmPassInput.fill('Pass123123');
+        await expect(registerPage.regConfirmPassInput).toHaveValue('Pass123123');
+        await registerPage.regSubmit.click();
+      });
+
+      await test.step('Verify user is registered', async () => {
+        await expect(registerPage.regTitle).toHaveText('Реєстрація');
+        await expect(registerPage.regNameInput).toBeEnabled();
+
+      });
+
+    });
+
   });
-})

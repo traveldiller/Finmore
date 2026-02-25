@@ -1,21 +1,23 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class RegisterPage {
   readonly page: Page;
+  readonly regLink: Locator;
   readonly regTitle: Locator;
-  readonly regName;
-  readonly regEmail;
-  readonly regPass;
-  readonly regConfirmPass;
-  readonly regSubmit;
+  readonly regNameInput: Locator;
+  readonly regEmailInput: Locator;
+  readonly regPassInput: Locator;
+  readonly regConfirmPassInput: Locator;
+  readonly regSubmit: Locator;
 
 constructor(page: Page) {
     this.page = page;
+    this.regLink = page.getByTestId('switch-to-register-button');
     this.regTitle = page.getByTestId('register-title');
-    this.regName = page.getByTestId('register-name-input');
-    this.regEmail = page.getByTestId('register-email-input');
-    this.regPass = page.getByTestId('register-password-input');
-    this.regConfirmPass = page.getByTestId('register-confirm-password-input');
+    this.regNameInput = page.getByTestId('register-name-input');
+    this.regEmailInput = page.getByTestId('register-email-input');
+    this.regPassInput = page.getByTestId('register-password-input');
+    this.regConfirmPassInput = page.getByTestId('register-confirm-password-input');
     this.regSubmit = page.getByTestId('register-submit-button');
     }
 }
