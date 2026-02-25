@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
+import {RegisterPage} from '@playwright/pages/registerPage';
 
 test.describe('Registration suite', () => {
   let regTitle;
