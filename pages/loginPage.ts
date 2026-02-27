@@ -1,23 +1,43 @@
 import { Page, Locator } from "@playwright/test";
+export interface LoginData {
+    email: string;
+    password: string;
+};
+
 
 export class LoginPage {
-  readonly page: Page;
-  readonly loginEmailInput: Locator;
-  readonly loginPassInput: Locator;
-  readonly loginSubmitButton: Locator;
-  readonly userMenu: Locator;  //maybe it better to put in another Class > Account for example
-  readonly appTitle: Locator; //maybe it better to put in another Class > Account for example
-  readonly appLogo: Locator;
+    readonly page: Page;
+    readonly loginEmailInput: Locator;
+    readonly loginPassInput: Locator;
+    readonly loginSubmitButton: Locator;
+    readonly userMenu: Locator;  //maybe it better to put in another Class > Account for example
+    readonly appTitle: Locator; //maybe it better to put in another Class > Account for example
+    readonly appLogo: Locator;
 
 
-constructor(page: Page) {
-    this.page = page;
-    this.loginEmailInput = page.getByTestId('login-email-input');
-    this.loginPassInput = page.getByTestId('login-password-input');
-    this.loginSubmitButton = page.getByTestId('login-submit-button');
-    this.userMenu = page.getByTestId('user-menu-trigger');
-    this.appTitle = page.getByTestId('app-title'); // 2 same ID for the page: header 'FinanceManager' with space and without
-    this.appLogo = page.getByTestId('app-logo');
+    constructor(page: Page) {
+        this.page = page;
+        this.loginEmailInput = page.getByTestId('login-email-input');
+        this.loginPassInput = page.getByTestId('login-password-input');
+        this.loginSubmitButton = page.getByTestId('login-submit-button');
+        this.userMenu = page.getByTestId('user-menu-trigger');
+        this.appTitle = page.getByTestId('app-title'); // 2 same ID for the page: header 'FinanceManager' with space and without
+        this.appLogo = page.getByTestId('app-logo');
     }
+
+    async login(data: LoginData) {
+        await this.loginEmailInput.fill(data.email);
+        await this.loginPassInput.fill(data.password);
+        await this.loginSubmitButton.click();
+    }
+
+    async clickOnLoginButton() {
+        await this.loginSubmitButton.click();
+    }
+
+    async openHomepage() {
+        await this.page.goto('/');
+    }
+
 }
 
