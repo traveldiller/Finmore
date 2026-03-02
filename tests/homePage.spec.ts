@@ -114,6 +114,11 @@ test.describe('User Registration suite', () => {
         confirmPassword: 'Pass123123'
       });
 
+      await expect(registerPage.regNameInput).toHaveValue('Test User');
+      await expect(registerPage.regEmailInput).toHaveValue('Test123@gmail.com');
+      await expect(registerPage.regPassInput).toHaveValue('Pass123123');
+      await expect(registerPage.regConfirmPassInput).toHaveValue('Pass123123');
+
       await registerPage.clickonRegisterButton();
 
     });

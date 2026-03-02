@@ -1,5 +1,14 @@
 import { test, expect, Page } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
+import { USERS } from './testData';
+import testData from './testData.json';
+
+
+// 1st option for user data
+//const ADMIN_CREDENTIALS = {
+//     email: 'admin@demo.com',
+//     password: 'admin123'
+// };
 
 
 test.describe('Login suite', () => {
@@ -28,18 +37,36 @@ test.describe('Login suite', () => {
             // await expect(loginPage.loginPassInput).toHaveValue('admin123');
             // await loginPage.loginSubmitButton.click();
 
-        await loginPage.login({
-            email: 'admin@demo.com',
-            password: 'admin123'
-        });
+            //1 st option for test data
+            // await loginPage.login(
+            //     ADMIN_CREDENTIALS
+            // );
+
+            const admin = testData.admin;
+
+            await loginPage.login({
+                email: admin.email,
+                password: admin.password
+            });
+
+            await expect(loginPage.loginEmailInput).toHaveValue(admin.email);
+
+
+            await loginPage.login(
+                USERS.admin
+            );
+            
+            await expect(loginPage.loginEmailInput).toHaveValue(USERS.admin.email);
+            await expect(loginPage.loginPassInput).toHaveValue(USERS.admin.password);
+            await loginPage.clickOnLoginButton();
         });
 
 
-        //await loginPage.clickOnLoginButton();
 
         await test.step('Verify user is logged in', async () => {
             await expect(loginPage.userMenu).toBeVisible();
-            await expect(loginPage.userMenu).toHaveText('Admin Demo');
+            await expect(loginPage.userMenu).toHaveText(USERS.admin.name);
+
             await expect(loginPage.appTitle.first()).toContainText('FinanceManager');
             await expect(loginPage.appLogo).toBeVisible();
         });
